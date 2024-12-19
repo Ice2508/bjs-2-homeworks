@@ -10,25 +10,24 @@ class AlarmClock {
       throw new Error('Параметр времени не передан');
     }
     for (let i = 0; i < this.alarmCollection.length; i++) {
-    if (this.alarmCollection[i]['time'] === time) {
-      console.warn('Уже присутствует звонок на это же время');
+      if (this.alarmCollection[i]['time'] === time) {
+        console.warn('Уже присутствует звонок на это же время');
       }
-  }
-  this.alarmCollection.push({
-    time: time, 
-    callback, 
-    canCall: true
-  })
+    }
+    this.alarmCollection.push({
+      time: time,
+      callback,
+      canCall: true
+    })
 
   }
-  
+
   removeClock(time) {
     this.alarmCollection = this.alarmCollection.filter(el => el.time !== time);
   }
-  
 
-  getCurrentFormattedTime() {
-    const now = new Date(); 
+    getCurrentFormattedTime() {
+    const now = new Date();
     let hours = now.getHours();
     let minutes = now.getMinutes();
     return `${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
@@ -41,9 +40,9 @@ class AlarmClock {
     this.intervalId = setInterval(() => {
       const currentTime = this.getCurrentFormattedTime();
       this.alarmCollection.forEach((el) => {
-        if(el.time === currentTime && el.canCall) {
-           el.canCall = false;
-           el.callback();
+        if (el.time === currentTime && el.canCall) {
+          el.canCall = false;
+          el.callback();
         }
       });
     }, 1000);
@@ -63,6 +62,3 @@ class AlarmClock {
     this.alarmCollection = [];
   }
 }
-
-let a = new AlarmClock(); 
-console.log(a.alarmCollection);
